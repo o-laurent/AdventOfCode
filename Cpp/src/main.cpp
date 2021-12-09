@@ -1,6 +1,7 @@
 #include "solutions/day1.cpp"
 #include "solutions/day2.cpp"
 #include "solutions/day3.cpp"
+#include "solutions/day6.cpp"
 #include <iostream>
 #include <tuple>
 
@@ -16,5 +17,11 @@ int main(int argc, const char **argv) {
   int eps = std::get<1>(val);
   std::cout << "Answer to the 3rd day - 1st stage: gamma: " << gamma
             << "; eps: " << eps << "; prod: " << gamma * eps << std::endl;
+
+  std::cout << "Answer to the 6nd day - 1st stage test: " << stage1_6_test() << std::endl;
+  std::cout << "Answer to the 6nd day - 1st stage: " << stage1_6() << std::endl;
+  std::cout << "Answer to the 6nd day - 2nd stage test: " << stage2_6_test() << std::endl;
+  std::cout << "Answer to the 6nd day - 2nd stage: " << stage2_6() << std::endl;
+
   return 0;
 }
