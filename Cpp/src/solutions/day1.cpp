@@ -1,8 +1,7 @@
 #include <fstream>
 #include <iostream>
-#include <deque>
 
-int stage1() {
+int stage1_1() {
   /**
    * @brief Resolve the stage1 of the December the first.
    * 
@@ -21,7 +20,7 @@ int stage1() {
   return counter;
 }
 
-int stage2() {
+int stage2_1() {
   /**
    * @brief Resolve the stage1 of the December the second.
    * 
