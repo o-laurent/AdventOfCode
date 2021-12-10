@@ -35,120 +35,40 @@ bool local_minimum(int i, int j, std::vector<std::vector<int>> &map) {
 
 int bassin(int i, int j, std::vector<std::vector<int>> &map) {
   /**
-   * @brief à réduire
-   * 
+   * @brief Compute the size of the bassin corresponding to a local minimum.
+   *
    */
   // std::cout << i << ", " << j << ", " << std::endl;
   map[i][j] = -1;
   int isize = map.size();
   int jsize = map[0].size();
   int score = 1;
-  if (i == 0 && j == 0) {
-    int val = map[i + 1][j];
-    if (val != -1 && val != 9) {
-      score += bassin(i + 1, j, map);
-    }
-    val = map[i][j + 1];
-    if (val != -1 && val != 9) {
-      score += bassin(i, j + 1, map);
-    }
-  } else if (i == 0 && j == jsize - 1) {
-    int val = map[i + 1][j];
-    if (val != -1 && val != 9) {
-      score += bassin(i + 1, j, map);
-    }
-    val = map[i][j - 1];
-    if (val != -1 && val != 9) {
-      score += bassin(i, j - 1, map);
-    }
-  } else if (i == isize - 1 && j == 0) {
-    int val = map[i][j + 1];
-    if (val != -1 && val != 9) {
-      score += bassin(i, j + 1, map);
-    }
-    val = map[i - 1][j];
+
+  if (i != 0) {
+    int val = map[i - 1][j];
     if (val != -1 && val != 9) {
       score += bassin(i - 1, j, map);
     }
-  } else if (i == isize - 1 && j == jsize - 1) {
+  }
+  if (i != isize - 1) {
+    int val = map[i + 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i + 1, j, map);
+    }
+  }
+  if (j != 0) {
     int val = map[i][j - 1];
     if (val != -1 && val != 9) {
       score += bassin(i, j - 1, map);
     }
-    val = map[i - 1][j];
-    if (val != -1 && val != 9) {
-      score += bassin(i - 1, j, map);
-    }
-  } else if (i == 0) {
+  }
+  if (j != jsize - 1) {
     int val = map[i][j + 1];
     if (val != -1 && val != 9) {
       score += bassin(i, j + 1, map);
-    }
-    val = map[i][j - 1];
-    if (val != -1 && val != 9) {
-      score += bassin(i, j - 1, map);
-    }
-    val = map[i + 1][j];
-    if (val != -1 && val != 9) {
-      score += bassin(i + 1, j, map);
-    }
-  } else if (i == isize - 1) {
-    int val = map[i][j + 1];
-    if (val != -1 && val != 9) {
-      score += bassin(i, j + 1, map);
-    }
-    val = map[i][j - 1];
-    if (val != -1 && val != 9) {
-      score += bassin(i, j - 1, map);
-    }
-    val = map[i - 1][j];
-    if (val != -1 && val != 9) {
-      score += bassin(i - 1, j, map);
-    }
-  } else if (j == 0) {
-    int val = map[i + 1][j];
-    if (val != -1 && val != 9) {
-      score += bassin(i + 1, j, map);
-    }
-    val = map[i - 1][j];
-    if (val != -1 && val != 9) {
-      score += bassin(i - 1, j, map);
-    }
-    val = map[i][j + 1];
-    if (val != -1 && val != 9) {
-      score += bassin(i, j + 1, map);
-    }
-  } else if (j == jsize - 1) {
-    int val = map[i + 1][j];
-    if (val != -1 && val != 9) {
-      score += bassin(i + 1, j, map);
-    }
-    val = map[i - 1][j];
-    if (val != -1 && val != 9) {
-      score += bassin(i - 1, j, map);
-    }
-    val = map[i][j - 1];
-    if (val != -1 && val != 9) {
-      score += bassin(i, j - 1, map);
-    }
-  } else {
-    int val = map[i + 1][j];
-    if (val != -1 && val != 9) {
-      score += bassin(i + 1, j, map);
-    }
-    val = map[i - 1][j];
-    if (val != -1 && val != 9) {
-      score += bassin(i - 1, j, map);
-    }
-    val = map[i][j + 1];
-    if (val != -1 && val != 9) {
-      score += bassin(i, j + 1, map);
-    }
-    val = map[i][j - 1];
-    if (val != -1 && val != 9) {
-      score += bassin(i, j - 1, map);
     }
   }
+
   return score;
 }
 
@@ -216,7 +136,7 @@ int stage2_9(bool test) {
     map.push_back(row);
   }
 
-  std::vector<int> bassin_size; 
+  std::vector<int> bassin_size;
   int risk = 0;
   int size_i = map.size();
   for (int i = 0; i < size_i; i++) {
@@ -228,11 +148,11 @@ int stage2_9(bool test) {
       }
     }
   }
-  std::vector<int> dest(3); //largest n numbers; VLA or std::dynarray in C++14
-  std::partial_sort_copy(
-      std::begin(bassin_size), std::end(bassin_size), //.begin/.end in C++98/C++03
-      std::begin(dest), std::end(dest), 
-      std::greater<int>() //remove "int" in C++14
+  std::vector<int> dest(3); // largest n numbers; VLA or std::dynarray in C++14
+  std::partial_sort_copy(std::begin(bassin_size),
+                         std::end(bassin_size), //.begin/.end in C++98/C++03
+                         std::begin(dest), std::end(dest),
+                         std::greater<int>() // remove "int" in C++14
   );
 
   return std::accumulate(dest.begin(), dest.end(), 1, std::multiplies<int>());
