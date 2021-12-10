@@ -7,7 +7,6 @@
 #include <vector>
 #include <numeric>
 
-
 long median(std::vector<long> &states) {
   long n = states.size() / 2;
   nth_element(states.begin(), states.begin() + n, states.end());
