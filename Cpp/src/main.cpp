@@ -2,6 +2,9 @@
 #include "solutions/day2.cpp"
 #include "solutions/day3.cpp"
 #include "solutions/day6.cpp"
+#include "solutions/day7.cpp"
+#include "solutions/day9.cpp"
+
 #include <iostream>
 #include <tuple>
 
@@ -23,5 +26,12 @@ int main(int argc, const char **argv) {
   std::cout << "Answer to the 6nd day - 2nd stage test: " << stage2_6_test() << std::endl;
   std::cout << "Answer to the 6nd day - 2nd stage: " << stage2_6() << std::endl;
 
+  std::cout << "Answer to the 7nd day - 1st stage test: " << stage1_7_test() << std::endl;
+  std::cout << "Answer to the 7nd day - 1st stage: " << stage1_7() << std::endl;
+  std::cout << "Answer to the 7nd day - 2nd stage test: " << stage2_7_test() << std::endl;
+  std::cout << "Answer to the 7nd day - 2nd stage: " << stage2_7() << std::endl;
+
+  std::cout << "Answer to the 9th day - 1st stage test: " << stage1_9(true) << std::endl;
+  std::cout << "Answer to the 9th day - 1st stage: " << stage1_9(false) << std::endl;
   return 0;
 }
