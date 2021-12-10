@@ -33,6 +33,125 @@ bool local_minimum(int i, int j, std::vector<std::vector<int>> &map) {
   return map[i][j] < end_val;
 }
 
+int bassin(int i, int j, std::vector<std::vector<int>> &map) {
+  /**
+   * @brief à réduire
+   * 
+   */
+  // std::cout << i << ", " << j << ", " << std::endl;
+  map[i][j] = -1;
+  int isize = map.size();
+  int jsize = map[0].size();
+  int score = 1;
+  if (i == 0 && j == 0) {
+    int val = map[i + 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i + 1, j, map);
+    }
+    val = map[i][j + 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j + 1, map);
+    }
+  } else if (i == 0 && j == jsize - 1) {
+    int val = map[i + 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i + 1, j, map);
+    }
+    val = map[i][j - 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j - 1, map);
+    }
+  } else if (i == isize - 1 && j == 0) {
+    int val = map[i][j + 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j + 1, map);
+    }
+    val = map[i - 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i - 1, j, map);
+    }
+  } else if (i == isize - 1 && j == jsize - 1) {
+    int val = map[i][j - 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j - 1, map);
+    }
+    val = map[i - 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i - 1, j, map);
+    }
+  } else if (i == 0) {
+    int val = map[i][j + 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j + 1, map);
+    }
+    val = map[i][j - 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j - 1, map);
+    }
+    val = map[i + 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i + 1, j, map);
+    }
+  } else if (i == isize - 1) {
+    int val = map[i][j + 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j + 1, map);
+    }
+    val = map[i][j - 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j - 1, map);
+    }
+    val = map[i - 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i - 1, j, map);
+    }
+  } else if (j == 0) {
+    int val = map[i + 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i + 1, j, map);
+    }
+    val = map[i - 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i - 1, j, map);
+    }
+    val = map[i][j + 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j + 1, map);
+    }
+  } else if (j == jsize - 1) {
+    int val = map[i + 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i + 1, j, map);
+    }
+    val = map[i - 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i - 1, j, map);
+    }
+    val = map[i][j - 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j - 1, map);
+    }
+  } else {
+    int val = map[i + 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i + 1, j, map);
+    }
+    val = map[i - 1][j];
+    if (val != -1 && val != 9) {
+      score += bassin(i - 1, j, map);
+    }
+    val = map[i][j + 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j + 1, map);
+    }
+    val = map[i][j - 1];
+    if (val != -1 && val != 9) {
+      score += bassin(i, j - 1, map);
+    }
+  }
+  return score;
+}
+
 int stage1_9(bool test) {
   /**
    * @brief Resolve the stage1 of 9th December.
@@ -70,4 +189,51 @@ int stage1_9(bool test) {
     }
   }
   return risk;
+}
+
+int stage2_9(bool test) {
+  /**
+   * @brief Resolve the stage1 of 9th December.
+   *
+   */
+  std::ifstream infile;
+  if (test)
+    infile.open("../data/data9_test.txt");
+  else
+    infile.open("../data/data9.txt");
+
+  std::string str;
+  int line = 0;
+  std::vector<std::vector<int>> map;
+
+  while (infile >> str) {
+    std::vector<int> row;
+    for (char const &c : str) {
+      // std::cout << (int)(c - '0') << std::endl;
+      row.push_back((int)(c - '0'));
+    }
+    // std::cout << std::endl;
+    map.push_back(row);
+  }
+
+  std::vector<int> bassin_size; 
+  int risk = 0;
+  int size_i = map.size();
+  for (int i = 0; i < size_i; i++) {
+    int size_j = map[i].size();
+    for (int j = 0; j < size_j; j++) {
+      if (local_minimum(i, j, map)) {
+        // std::cout << "i: " << i << " j: " << j << std::endl;
+        bassin_size.push_back(bassin(i, j, map));
+      }
+    }
+  }
+  std::vector<int> dest(3); //largest n numbers; VLA or std::dynarray in C++14
+  std::partial_sort_copy(
+      std::begin(bassin_size), std::end(bassin_size), //.begin/.end in C++98/C++03
+      std::begin(dest), std::end(dest), 
+      std::greater<int>() //remove "int" in C++14
+  );
+
+  return std::accumulate(dest.begin(), dest.end(), 1, std::multiplies<int>());
 }
